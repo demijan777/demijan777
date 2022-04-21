@@ -1,0 +1,31 @@
+# stojancho.chavdarov@xconsulting.cz or Teams chat. Thank you very much!!!!!!!!
+# SSH to Multiple Devices from devices file
+# you have to create filename devices.txt and to put all of the management IP of the network devices.
+# if you want more verification or configuration commands copy the output line and add command.
+# You'll have to do this manually, but I'm working on script which will have commands.txt to have all the commands executed on all IP's.
+# You need to change username and password to your credentials.
+
+
+
+from netmiko import ConnectHandler
+
+with open('devices.txt') as routers:
+    for IP in routers:
+        Router = {
+            'device_type': 'cisco_ios',
+            'ip': IP,
+            'username': 'stole',
+            'password': 'stole'
+        }
+
+        net_connect = ConnectHandler(**Router)
+
+        print ('Connecting to ' + IP)
+        print('-'*79)
+        output = net_connect.send_command('sh ip int brief')
+        print(output)
+        print()
+        print('-'*79)
+
+# Finally close the connection
+net_connect.disconnect()
